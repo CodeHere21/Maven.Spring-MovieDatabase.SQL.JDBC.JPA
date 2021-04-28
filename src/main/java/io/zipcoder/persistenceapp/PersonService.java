@@ -55,6 +55,14 @@ public class PersonService {
         jdbc.execute(sql);
     }
 
+    public List<Person> getPersonByLastName(String lastName){
+        String sql = "SELECT * FROM PERSON WHERE LASTNAME = ?";
+        List<Person> people = new ArrayList<>();
+        List<Map<String, Object>> rows = jdbc.queryForList(sql);
+        buildPersonList(people, rows);
+        return people;
+    }
+
     private void buildPersonList(List<Person> listToBuild, List<Map<String, Object>> results) {
         for (Map row : results) {
             Person person = new Person();

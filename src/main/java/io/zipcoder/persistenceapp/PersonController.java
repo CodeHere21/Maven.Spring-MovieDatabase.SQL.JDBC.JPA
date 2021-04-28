@@ -65,4 +65,25 @@ public class PersonController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @RequestMapping(value="/person/reverselookup/{mobile}", method = RequestMethod.GET)
+    public ResponseEntity<?> getPersonByMobile(@PathVariable String mobile){
+        try{
+            Person person = service.getPersonByMobile(mobile);
+            return new ResponseEntity<>(person, HttpStatus.OK);
+        }
+        catch(EmptyResultDataAccessException e){
+            return new ResponseEntity<>("Person With"+mobile+" Number Not Found", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+    @RequestMapping(value="/person/surname/{lastname}", method = RequestMethod.GET)
+    public ResponseEntity<?> getPersonByLastName(@PathVariable String lastName){
+        try{
+            List<Person> people = service.getPersonByLastName(lastName);
+            return new ResponseEntity<>(people, HttpStatus.OK);
+        }
+        catch(EmptyResultDataAccessException e){
+            return new ResponseEntity<>("Person with lastname"+lastName+"not found",HttpStatus.BAD_REQUEST);
+        }
+    }
 }
